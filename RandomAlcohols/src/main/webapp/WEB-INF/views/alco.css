@@ -1,0 +1,35 @@
+body {
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+section {
+	margin: 2%;
+	position: relative;
+	width: 100%;
+	heigt: 100%;
+	overflow: hidden;
+}
+
+span {
+	font-size: 200%;
+	display: block;
+	width: 10em;
+	word-wrap: break-word;
+	float: left;
+}
+
+div {
+	padding-top: 10px;
+	margin: 2%;
+	width: 100%;
+	float: left;
+}
+
+button, select {
+	float: right;
+	margin-bottom: 1%;
+	margin-left: 20%;
+	margin-right: 20%;
+	display: block;
+}

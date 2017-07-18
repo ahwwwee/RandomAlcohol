@@ -1,0 +1,120 @@
+<HTML>
+<head>
+<title>Alcohol Decider</title>
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+<script>
+	var app = angular.module('AlcoApp', []);
+
+	app.service("apiAccess", function($http) {
+		this.getRandomAlcohol = function(type) {
+			return $http.post("/alcohol/random", type);
+		}
+
+		this.getRandomAlcoholAll = function() {
+			return $http.get("/alcohol/random");
+		}
+	})
+
+	app.controller('randomAlcohol', function($scope, apiAccess) {
+		$scope.typesArray = [ "All", "Wine", "Beer", "Something Harder" ]
+		$scope.AlcoBool = false;
+		$scope.alcohol = {
+			name : "Beer",
+			details : "drinkable",
+			percent : 10,
+			location : "somewhere",
+			type : "Beer"
+		}
+
+		$scope.random = function(type) {
+			type = "All"
+			if (type == "All") {
+				var data = apiAccess.getRandomAlcoholAll();
+				data.success(function(result) {
+					console.log(result);
+					$scope.AlcoBool = true;
+					$scope.alcohol = result;
+				}).error(function(err) {
+					alert(err);
+					alert("There was a wee issue, please try again.");
+				})
+			} else {
+				var data = apiAccess.getRandomAlcohol(type);
+				data.success(function(result) {
+					$scope.AlcoBool = true;
+					console.log(result)
+					$scope.alcohol = result;
+				}).error(function(err) {
+					alert(err);
+					alert("There was a wee issue, please try again.");
+				})
+			}
+		}
+	})
+</script>
+<style type="text/css">
+body {
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+section {
+	margin: 2%;
+	position: relative;
+	width: 100%;
+	heigt: 100%;
+	overflow: hidden;
+}
+
+span {
+	font-size: 200%;
+	display: block;
+	width: 10em;
+	word-wrap: break-word;
+	float: left;
+}
+
+div {
+	padding-top: 10px;
+	margin: 2%;
+	width: 100%;
+	float: left;
+}
+
+button, select {
+	float: right;
+	margin-bottom: 1%;
+	margin-left: 20%;
+	margin-right: 20%;
+	display: block;
+}
+</style>
+</head>
+<body data-ng-app="AlcoApp" data-ng-controller="randomAlcohol">
+	<section>
+
+		<span>For those days you just can't decide yourself</span> 
+		<!-- <select
+			data-ng-model="Types" data-ng-init="Types = types || typesArray[0]"
+			data-ng-options="i as i for i in typesArray">
+		</select></br>-->
+		<button data-ng-click="random(Types)">New Thing</button>
+
+		<div data-ng-model="alcohol" ng-show="AlcoBool">
+			<h1>{{alcohol.name}}</h1>
+			<h2>Alcohol Percentage abv: {{alcohol.percent}}%</h2>
+			<h3>Details:{{alcohol.details}}</h3>
+			<h2>From:{{alcohol.location}}</h2>
+		</div>
+	</section>
+</body>
+</HTML>
