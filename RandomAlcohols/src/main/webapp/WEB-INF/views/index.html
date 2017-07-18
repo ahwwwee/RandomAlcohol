@@ -25,7 +25,7 @@
 	})
 
 	app.controller('randomAlcohol', function($scope, apiAccess) {
-		$scope.typesArray = [ "All", "Wine", "Beer", "Something Harder" ]
+		$scope.typesArray = [ "All", "Wine", "Beer", "Liquer" ]
 		$scope.AlcoBool = false;
 		$scope.alcohol = {
 			name : "Beer",
@@ -44,7 +44,7 @@
 					$scope.AlcoBool = true;
 					$scope.alcohol = result;
 				}).error(function(err) {
-					alert(err);
+					console.log(err);
 					alert("There was a wee issue, please try again.");
 				})
 			} else {
@@ -54,7 +54,7 @@
 					console.log(result)
 					$scope.alcohol = result;
 				}).error(function(err) {
-					alert(err);
+					console.log(err);
 					alert("There was a wee issue, please try again.");
 				})
 			}
@@ -97,23 +97,27 @@ button, select {
 	margin-right: 20%;
 	display: block;
 }
+.about{
+color: grey;
+}
 </style>
 </head>
 <body data-ng-app="AlcoApp" data-ng-controller="randomAlcohol">
 	<section>
 
-		<span>For those days you just can't decide yourself</span> 
-		<!-- <select
+		<span>For those days you just can't decide yourself</span> <!-- <select
 			data-ng-model="Types" data-ng-init="Types = types || typesArray[0]"
-			data-ng-options="i as i for i in typesArray">
-		</select></br>-->
+			data-ng-options="i as i for i in typesArray">-->
+		</select></br>
 		<button data-ng-click="random(Types)">New Thing</button>
-
 		<div data-ng-model="alcohol" ng-show="AlcoBool">
-			<h1>{{alcohol.name}}</h1>
-			<h2>Alcohol Percentage abv: {{alcohol.percent}}%</h2>
-			<h3>Details:{{alcohol.details}}</h3>
-			<h2>From:{{alcohol.location}}</h2>
+			<h1><b>{{alcohol.name}}</b></h1>
+			<h1>Origin of {{alcohol.type}}: {{alcohol.location}}</h1>
+			<section class="about">
+			<h3>Alcohol Percentage abv: {{alcohol.percent}}%</h3>
+			<h4>About:</h4>
+			<p>{{alcohol.details}}</p>
+			</section>
 		</div>
 	</section>
 </body>

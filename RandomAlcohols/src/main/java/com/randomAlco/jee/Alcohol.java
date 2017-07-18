@@ -4,15 +4,22 @@ import java.io.Serializable;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Alcohol{
 	@Id
 	public ObjectId _id;
+	@Field
 	public String name;
+	@Field
 	public String details;
+	@Field
 	public float percent;
+	@Field
 	public String location; //possibly a Geolocation, by the end of this, and link to googleMap.
+	@Field
 	public String type;
+	@Field
 	public float num;
 	
 	public Alcohol(){
